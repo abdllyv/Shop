@@ -1,0 +1,108 @@
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+
+.shop {
+  width: 100%;
+  .container {
+    .cart-box {
+      padding-top: 200px;
+      .row {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .cart {
+          width: 32%;
+          padding: 30px;
+          margin-bottom: 30px;
+          background-color: rgb(28, 30, 33);
+          width: 380px;
+          min-height: 200px;
+          position: relative;
+          border-radius: 6px;
+          transition: 0.4s ease;
+          display: flex;
+          text-align: center;
+          flex-direction: column;
+          justify-content: center;
+          &::before {
+            content: "";
+            width: 101%;
+            height: 101%;
+            border-radius: 8px;
+            background-image: linear-gradient(
+              var(--rotate),
+              #bbbbbb,
+              #5e5e5e 43%,
+              #3b3b3b
+            );
+            position: absolute;
+            z-index: -1;
+            top: -0.5%;
+            left: -0.5%;
+            animation: spin 8s linear infinite;
+          }
+          &::after {
+            position: absolute;
+            content: "";
+            top: 83.3333333333px;
+            left: 0;
+            right: 0;
+            z-index: -1;
+            height: 100%;
+            width: 100%;
+            margin: 0 auto;
+            transform: scale(0.8);
+            filter: blur(83.3333333333px);
+            background-image: linear-gradient(
+              var(--rotate),
+              #bbbbbb,
+              #5e5e5e 43%,
+              #3b3b3b
+            );
+            opacity: 1;
+            transition: opacity 0.5s;
+            animation: spin 8s linear infinite;
+          }
+          .number {
+            font-weight: 600;
+            font-size: 20px;
+            color: #ff014f;
+          }
+          .title {
+            color: #878e99;
+            font-size: 16px;
+            font-weight: 400;
+          }
+          .btn {
+            a {
+              background-color: #262a2e;
+              margin-top: 15px;
+              padding: 10px 20px;
+              border-radius: 6px;
+              display: inline-block;
+              text-align: center;
+              font-size: 14px;
+              color: #c4cfde;
+              transition: 0.5s;
+              &:hover {
+                color: #ff014f;
+                transform: scale(1.1);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
