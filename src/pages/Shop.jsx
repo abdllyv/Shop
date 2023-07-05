@@ -1,41 +1,32 @@
 import { Link } from "react-router-dom";
-import { Context } from "../utils/context";
-import { useContext } from "react";
+import car from "../assets/img/wolswagen.png";
 
 const Shop = () => {
-  const { data } = useContext(Context);
   return (
     <main>
-      {data.length === 0 ? (
-        <section className="home">
-          <div className="row">
-            <h1 className="title">
-              <span style={{ fontSize: 80 }}>404</span> Page Not Found
-            </h1>
-            <div className="btn">
-              <Link to="/">Go To Home Page</Link>
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="shop">
-          <div className="container">
-            <div className="cart-box">
-              <div className="row">
-                {data.map((item) => (
-                  <div className="cart" key={item.id}>
-                    <span className="number">{item.id}</span>
-                    <h2 className="title">{item.title}</h2>
-                    <div className="btn">
-                      <Link>See More</Link>
-                    </div>
-                  </div>
-                ))}
+      <section className="shop">
+        <div className="container">
+          <div className="cart-box">
+            <div className="row">
+              <div className="cart" data-aos="fade-up" data-aos-duration="900">
+                <div className="top">
+                  <img src={car} alt="" />
+                </div>
+                <h2 className="title">Mercedes Benz</h2>
+                <p className="detail">
+                  Hyundai is an automotive brand known for its economical and
+                  durable cars. It is preferred for its user-friendly features
+                  and affordable prices.
+                </p>
+                <span className="number">190.000$</span>
+                <div className="btn">
+                  <Link>See More</Link>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
     </main>
   );
 };

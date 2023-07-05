@@ -23,7 +23,6 @@
           border-radius: 6px;
           transition: 0.4s ease;
           display: flex;
-          text-align: center;
           flex-direction: column;
           justify-content: center;
           &::before {
@@ -65,15 +64,32 @@
             transition: opacity 0.5s;
             animation: spin 8s linear infinite;
           }
+          .top {
+            width: 100%;
+            height: 200px;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
           .number {
             font-weight: 600;
             font-size: 20px;
             color: #ff014f;
           }
           .title {
+            color: #ccc;
+            font-size: 20px;
+            font-weight: 500;
+          }
+          .detail {
             color: #878e99;
-            font-size: 16px;
-            font-weight: 400;
+            margin: 10px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
           }
           .btn {
             a {
@@ -85,7 +101,7 @@
               text-align: center;
               font-size: 14px;
               color: #c4cfde;
-              transition: 0.5s;
+              transition: 0.5s ease;
               &:hover {
                 color: #ff014f;
                 transform: scale(1.1);
