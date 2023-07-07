@@ -10,7 +10,8 @@
     .cart-box {
       padding-top: 200px;
       .row {
-        justify-content: space-between;
+        justify-content: center;
+        gap: 35px;
         flex-wrap: wrap;
         .cart {
           width: 32%;
@@ -70,7 +71,7 @@
             img {
               width: 100%;
               height: 100%;
-              object-fit: cover;
+              object-fit: contain;
             }
           }
           .number {

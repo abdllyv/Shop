@@ -3,9 +3,13 @@
 
 // Compnents
 @import "./components/header";
+@import "./components/loader";
+
 
 // Pages
 @import "./pages/home";
 @import "./pages/shop.scss";
 @import "./pages/login";
-@import "./pages/singUp.scss"
+@import "./pages/singUp.scss";
+@import "./pages/car-detail";
+@import "./pages/profile";

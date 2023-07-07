@@ -1,28 +1,44 @@
-import { Link } from "react-router-dom";
-import car from "../assets/img/wolswagen.png";
+import { useEffect, useState } from "react";
+import Cart from "../components/Cart";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Shop = () => {
+// Loacl State
+  const [cars,setCars]=useState([])
+  const [loading,setLoading]=useState(false)
+  //  Navigate
+  const navigate=useNavigate()
+  useEffect(()=>{
+    getData()
+  },[])
+  const getData=async()=>{
+try {
+  setLoading(true)
+   await axios.get("http://localhost:5000/api/products").then(res=>{
+    if(res.status===200){
+      setCars(res.data)
+      setLoading(false)
+    }
+   })
+} catch (error) {
+  setLoading(false)
+  navigate("/error")
+  
+}
+  }
   return (
     <main>
       <section className="shop">
+        {loading && <Loader/>}
         <div className="container">
           <div className="cart-box">
             <div className="row">
-              <div className="cart" data-aos="fade-up" data-aos-duration="900">
-                <div className="top">
-                  <img src={car} alt="" />
-                </div>
-                <h2 className="title">Mercedes Benz</h2>
-                <p className="detail">
-                  Hyundai is an automotive brand known for its economical and
-                  durable cars. It is preferred for its user-friendly features
-                  and affordable prices.
-                </p>
-                <span className="number">190.000$</span>
-                <div className="btn">
-                  <Link>See More</Link>
-                </div>
-              </div>
+         {cars.map(item=>(
+          
+              <Cart  data={item} key={item.id}/>
+         ))}
             </div>
           </div>
         </div>

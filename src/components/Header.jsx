@@ -3,11 +3,15 @@ import userImg from "../assets/img/profile-img.png";
 import { FaShoppingCart, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { BiSolidUser } from "react-icons/bi";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../utils/CartContext";
 
 const Header = () => {
+  // Local State
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cartIsProfile, setCartIsProfile] = useState(false);
+  // Global State
+  const { cart } = useContext(Context);
 
   return (
     <header className="header">
@@ -38,24 +42,26 @@ const Header = () => {
               <span>LOG IN</span>
             </Link>
             <div
-              class="private-menu "
+              className="private-menu "
               onClick={() =>
                 cartIsProfile ? setCartIsProfile(false) : setCartIsProfile(true)
               }
             >
-              <img src={userImg} alt="profil-img" class="profile-photo" />
+              <img src={userImg} alt="profil-img" className="profile-photo" />
               <div
-                class={`sub-menu-wrap ${cartIsProfile && "isOpenProfileSide"}`}
+                className={`sub-menu-wrap ${
+                  cartIsProfile && "isOpenProfileSide"
+                }`}
               >
-                <div class="top">
+                <div className="top">
                   <img src={userImg} alt="profil-img" />
-                  <h2 class="title">Sadiq Abdulllayev</h2>
+                  <h2 className="title">Sadiq Abdulllayev</h2>
                 </div>
                 <hr />
-                <div class="botom">
-                  <ul class="sub-list">
-                    <li class="sub-item">
-                      <Link class="sub-menu-link">
+                <div className="botom">
+                  <ul className="sub-list">
+                    <li className="sub-item">
+                      <Link className="sub-menu-link" to="/profile">
                         <div className="icon">
                           <BiSolidUser />
                         </div>
@@ -64,8 +70,8 @@ const Header = () => {
                       </Link>
                     </li>
 
-                    <li class="sub-item">
-                      <Link class="sub-menu-link">
+                    <li className="sub-item">
+                      <Link className="sub-menu-link">
                         <div className="icon">
                           <FiLogOut />
                         </div>
@@ -84,27 +90,31 @@ const Header = () => {
         <div className="cartHead">
           <h2>My Cart</h2>
           <div className="icon">
-            <FaWindowClose />
+            <FaWindowClose onClick={() => setCartIsOpen(false)} />
           </div>
         </div>
         <ul className="cartList">
           <div className="empty">
-            <p className="error-empty">Cart is Empty</p>
-            <li className="cartItem">
-              <div className="carImg">
-                <img src={userImg} alt="" />
-              </div>
-              <div className="carInfo">
-                <p className="carTitle">name</p>
-                <div className="nums">
-                  <p className="carPrice">Price: 180000$</p>
-                  <p className="quantity">Quantity: 0</p>
-                </div>
-              </div>
-            </li>
-            <Link to="/shop">Buy new car</Link>
+            {cart.length === 0 ? (
+              <p className="error-empty">Cart is Empty</p>
+            ) : (
+              cart.map((item) => (
+                <li className="cartItem" key={item.id}>
+                  <div className="carImg">
+                    <img src={`http://localhost:5000/${item.productImage}`} alt="" />
+                  </div>
+                  <div className="carInfo">
+                    <p className="carTitle">{item.name}</p>
+                    <div className="nums">
+                      <p className="carPrice">Price: {item.price}$</p>
+                      <p className="quantity">Quantity: {item.quantify}</p>
+                    </div>
+                  </div>
+                </li>
+              ))
+            )}
           </div>
-          <Link to="/cart">View on Cart</Link>
+          {cart.length !== 0 && <Link to="/cart">View on Cart</Link>}
         </ul>
       </div>
       <div

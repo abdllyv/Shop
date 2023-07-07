@@ -10,28 +10,28 @@ const SingUp = () => {
             data-aos="fade-up"
             data-aos-duration="900"
           >
-            <div class="form-group">
-              <label for="name">Name</label>
+            <div className="form-group">
+              <label >Name</label>
               <input type="name" id="name" name="name" />
-              <div id="name-error" class="error-message"></div>
+              <div id="name-error" className="error-message"></div>
             </div>
-            <div class="form-group">
-              <label for="surname">Surname</label>
+            <div className="form-group">
+              <label >Surname</label>
               <input type="surname" id="surname" name="surname" />
-              <div id="surname-error" class="error-message"></div>
+              <div id="surname-error" className="error-message"></div>
             </div>
-            <div class="form-group">
-              <label for="email">Email</label>
+            <div className="form-group">
+              <label >Email</label>
               <input type="email" id="email" name="email" />
-              <div id="email-error" class="error-message"></div>
+              <div id="email-error" className="error-message"></div>
             </div>
-            <div class="form-group">
-              <label for="pasword">Pasword</label>
+            <div className="form-group">
+              <label>Pasword</label>
               <input type="pasword" id="pasword" name="pasword" />
-              <div id="pasword-error" class="error-message"></div>
+              <div id="pasword-error" className="error-message"></div>
             </div>
 
-            <button type="submit" class="btn">
+            <button type="submit" className="btn">
               SEND MESSAGE
             </button>
           </form>
