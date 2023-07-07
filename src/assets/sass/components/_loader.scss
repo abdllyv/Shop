@@ -1,18 +1,12 @@
-* {
-	border: 0;
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
+
 :root {
 	--bg: #e3e4e8;
 	--fg: #ff014f;
 	--dur: 8s;
-	font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320));
 }
 .loading{
 	color: var(--fg);
-	font: bold 0.5em/1 "Comfortaa", sans-serif;
+	font: bold 1em/1 "Comfortaa", sans-serif;
 	display: grid;
 	place-items: center;
 	align-content: center;

@@ -114,7 +114,7 @@ const Header = () => {
               ))
             )}
           </div>
-          {cart.length !== 0 && <Link to="/cart">View on Cart</Link>}
+          {cart.length !== 0 && <Link to="/all-product">View on Cart</Link>}
         </ul>
       </div>
       <div

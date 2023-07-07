@@ -9,6 +9,7 @@ import SingUp from "./pages/SingUp";
 import CarDetails from "./pages/CarDetails";
 import Prfile from "./pages/Prfile";
 import Loader from "./components/Loader";
+import ViewAllProduct from "./pages/ViewAllProduct";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/car-detail/:carId" element={<CarDetails />} />
+        <Route path="/all-product" element={<ViewAllProduct/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/singUp" element={<SingUp />} />
         <Route path="/profile" element={<Prfile/>}/>
