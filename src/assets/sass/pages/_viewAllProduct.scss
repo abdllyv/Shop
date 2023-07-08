@@ -9,7 +9,33 @@
       .title {
         color: #c4cfde;
       }
+      .btn {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        .quantify {
+          width: 15px;
 
+          display: flex;
+          justify-content: center;
+        }
+        button {
+          color: #ff014f;
+          font-size: 13px;
+          padding: 5px 8px;
+          border-radius: 6px;
+          margin: 5px;
+          background-color: #1c1e21;
+          font-weight: 500;
+          transform: scale(1);
+          transition: all 0.4s;
+          display: inline-block;
+          &:hover {
+            color: #c4cfde;
+            transform: scale(1.1);
+          }
+        }
+      }
       td,
       tr {
         color: #ccc;
@@ -64,6 +90,13 @@
               }
             }
           }
+        }
+      }
+      .total-sum {
+        color: #c4cfde;
+        font-size: 18px;
+        span {
+          color: #ff014f;
         }
       }
     }

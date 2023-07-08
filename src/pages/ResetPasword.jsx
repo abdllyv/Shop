@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
@@ -6,15 +7,18 @@ import axios from "axios";
 import { useContext } from "react";
 import { Auth } from "../utils/Auth";
 
-const Login = () => {
-  const { setToken } = useContext(Auth);
+
+const ResetPasword = () => {
   // Navigate
   const navigate = useNavigate();
 
+  // Global State
+  const {setToken}=useContext(Auth)
+
   // Schema
   const registerSchema = object({
-    email: string().required().trim().email(),
     password: string().required().trim().min(8).max(18),
+    repassword: string().required().trim().min(8).max(18),
   });
 
   // React Hook Form
@@ -24,17 +28,22 @@ const Login = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(registerSchema) });
   const onSubmit = async (data) => {
-    await axios
-      .post(process.env.REACT_APP_LOGIN, data)
-      .then((res) => {
-        if (res.status === 200) {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          navigate("/");
-          setToken(true)
-        }
-      })
-      .catch((err) => {console.log(err)
-      setToken(false)});
+    if(data.password === data.repassword){
+        await axios
+          .post(process.env.REACT_APP_CHANGE_PASSWORD, {
+            token: JSON.parse(localStorage.getItem("token")),
+            password: data.password,
+          })
+          .then((res) => {
+            if (res.status === 200) {
+          
+              navigate("/login")
+              setToken(false)
+              localStorage.setItem("token", JSON.stringify(""));
+            }
+          })
+          .catch((err) => console.log(err));
+    }
   };
   return (
     <section className="login">
@@ -48,22 +57,9 @@ const Login = () => {
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                {...register("email")}
-              />
-              {errors.email && (
-                <div className="error-message">{errors.email.message}</div>
-              )}
-            </div>
-            <div className="form-group">
               <label>Password</label>
               <input
                 type="password"
-                id="password"
                 name="password"
                 {...register("password")}
               />
@@ -71,20 +67,26 @@ const Login = () => {
                 <div className="error-message">{errors.password.message}</div>
               )}
             </div>
-            <p className="text">
-              Don't have an account? <Link to="/singUp">Sign up</Link>
-            </p>
-            <Link className="text" to="/forget-password">
-              Forgot Pasword?
-            </Link>
+            <div className="form-group">
+              <label>Repassword</label>
+              <input
+                type="password"
+                name="repassword"
+                {...register("repassword")}
+              />
+              {errors.repassword && (
+                <div className="error-message">{errors.repassword.message}</div>
+              )}
+            </div>
             <button type="submit" className="btn">
               SEND MESSAGE
             </button>
           </form>
         </div>
       </div>
+     
     </section>
   );
 };
 
-export default Login;
+export default ResetPasword;

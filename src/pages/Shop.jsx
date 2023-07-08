@@ -11,23 +11,23 @@ const Shop = () => {
   //  Navigate
   const navigate=useNavigate()
   useEffect(()=>{
-    getData()
-  },[])
-  const getData=async()=>{
-try {
-  setLoading(true)
-   await axios.get("http://localhost:5000/api/products").then(res=>{
-    if(res.status===200){
-      setCars(res.data)
-      setLoading(false)
-    }
-   })
-} catch (error) {
-  setLoading(false)
-  navigate("/error")
-  
-}
+    const getData=async()=>{
+  try {
+    setLoading(true)
+     await axios.get("http://localhost:5000/api/products").then(res=>{
+      if(res.status===200){
+        setCars(res.data)
+        setLoading(false)
+      }
+     })
+  } catch (error) {
+    setLoading(false)
+    navigate("/error")
+    
   }
+    }
+    getData()
+  },[navigate])
   return (
     <main>
       <section className="shop">

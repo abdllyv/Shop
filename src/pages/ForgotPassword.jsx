@@ -3,18 +3,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
 import axios from "axios";
-import { useContext } from "react";
-import { Auth } from "../utils/Auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const Login = () => {
-  const { setToken } = useContext(Auth);
+const ForgotPassword = () => {
   // Navigate
   const navigate = useNavigate();
 
   // Schema
   const registerSchema = object({
     email: string().required().trim().email(),
-    password: string().required().trim().min(8).max(18),
   });
 
   // React Hook Form
@@ -25,16 +23,26 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(registerSchema) });
   const onSubmit = async (data) => {
     await axios
-      .post(process.env.REACT_APP_LOGIN, data)
+      .post(process.env.REACT_APP_SEND_RESET_LINK, {
+        token: JSON.parse(localStorage.getItem("token")),
+        email: data.email,
+      })
       .then((res) => {
         if (res.status === 200) {
-          localStorage.setItem("token", JSON.stringify(res.data.token));
-          navigate("/");
-          setToken(true)
+          toast.info(res.data, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          navigate("/otp-confirmation")
         }
       })
-      .catch((err) => {console.log(err)
-      setToken(false)});
+      .catch((err) => console.log(err));
   };
   return (
     <section className="login">
@@ -59,32 +67,30 @@ const Login = () => {
                 <div className="error-message">{errors.email.message}</div>
               )}
             </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                {...register("password")}
-              />
-              {errors.password && (
-                <div className="error-message">{errors.password.message}</div>
-              )}
-            </div>
+
             <p className="text">
-              Don't have an account? <Link to="/singUp">Sign up</Link>
+              Do you have an account? <Link to="/login">Login</Link>
             </p>
-            <Link className="text" to="/forget-password">
-              Forgot Pasword?
-            </Link>
             <button type="submit" className="btn">
               SEND MESSAGE
             </button>
           </form>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </section>
   );
 };
 
-export default Login;
+export default ForgotPassword;

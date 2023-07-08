@@ -5,13 +5,15 @@ import { FiLogOut } from "react-icons/fi";
 import { BiSolidUser } from "react-icons/bi";
 import { useContext, useState } from "react";
 import { Context } from "../utils/CartContext";
+import { Auth } from "../utils/Auth";
 
 const Header = () => {
   // Local State
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cartIsProfile, setCartIsProfile] = useState(false);
   // Global State
-  const { cart } = useContext(Context);
+  const { cart, cartSum } = useContext(Context);
+  const { user, token, setToken } = useContext(Auth);
 
   return (
     <header className="header">
@@ -33,56 +35,102 @@ const Header = () => {
             </ul>
           </nav>
           <div className="userArea">
-            <div className="cart">
-              <span className="count">0</span>
-              <FaShoppingCart onClick={() => setCartIsOpen(true)} />
-            </div>
-            <Link className="login" to="/login">
-              <FaUserCircle />
-              <span>LOG IN</span>
-            </Link>
-            <div
-              className="private-menu "
-              onClick={() =>
-                cartIsProfile ? setCartIsProfile(false) : setCartIsProfile(true)
-              }
-            >
-              <img src={userImg} alt="profil-img" className="profile-photo" />
-              <div
-                className={`sub-menu-wrap ${
-                  cartIsProfile && "isOpenProfileSide"
-                }`}
-              >
-                <div className="top">
-                  <img src={userImg} alt="profil-img" />
-                  <h2 className="title">Sadiq Abdulllayev</h2>
-                </div>
-                <hr />
-                <div className="botom">
-                  <ul className="sub-list">
-                    <li className="sub-item">
-                      <Link className="sub-menu-link" to="/profile">
-                        <div className="icon">
-                          <BiSolidUser />
-                        </div>
-                        <p>Edit Profile</p>
-                        <span>&gt;</span>
-                      </Link>
-                    </li>
+            {token && (
+              <div className="cart">
+                <span className="count">{cartSum}</span>
+                <FaShoppingCart onClick={() => setCartIsOpen(true)} />
+              </div>
+            )}
+            {!token && (
+              <Link className="login" to="/login">
+                <FaUserCircle />
+                <span>LOG IN</span>
+              </Link>
+            )}
 
-                    <li className="sub-item">
-                      <Link className="sub-menu-link">
-                        <div className="icon">
-                          <FiLogOut />
-                        </div>
-                        <p>Logout</p>
-                        <span>&gt;</span>
-                      </Link>
-                    </li>
-                  </ul>
+            {token && (
+              <div
+                className="private-menu "
+                onClick={() =>
+                  cartIsProfile
+                    ? setCartIsProfile(false)
+                    : setCartIsProfile(true)
+                }
+              >
+                {user.profileImage === null ? (
+                  <img
+                    src={userImg}
+                    alt="profil-img"
+                    className="profile-photo"
+                  />
+                ) : (
+                  user.profileImage && (
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE}${user.profileImage}`}
+                      alt="profil-img"
+                      className="profile-photo"
+                    />
+                  )
+                )}
+
+                <div
+                  className={`sub-menu-wrap ${
+                    cartIsProfile && "isOpenProfileSide"
+                  }`}
+                >
+                  <div className="top">
+                    {user.profileImage === null ? (
+                      <img
+                        src={userImg}
+                        alt="profil-img"
+                        className="profile-photo"
+                      />
+                    ) : (
+                      user.profileImage && (
+                        <img
+                          src={`${process.env.REACT_APP_IMAGE}${user.profileImage}`}
+                          alt="profil-img"
+                          className="profile-photo"
+                        />
+                      )
+                    )}
+                    <h2 className="title">
+                      {user.name} {user.surname}
+                    </h2>
+                  </div>
+                  <hr />
+                  <div className="botom">
+                    <ul className="sub-list">
+                      <li className="sub-item">
+                        <Link className="sub-menu-link" to="/profile">
+                          <div className="icon">
+                            <BiSolidUser />
+                          </div>
+                          <p>Edit Profile</p>
+                          <span>&gt;</span>
+                        </Link>
+                      </li>
+
+                      <li className="sub-item">
+                        <Link
+                          className="sub-menu-link"
+                          onClick={() => {
+                            setToken(false);
+                            localStorage.setItem("token", JSON.stringify(""));
+                          }}
+                        >
+                          <div className="icon">
+                            <FiLogOut />
+                          </div>
+                          <p>Logout</p>
+                          <span>&gt;</span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -101,7 +149,10 @@ const Header = () => {
               cart.map((item) => (
                 <li className="cartItem" key={item.id}>
                   <div className="carImg">
-                    <img src={`http://localhost:5000/${item.productImage}`} alt="" />
+                    <img
+                      src={`http://localhost:5000/${item.productImage}`}
+                      alt=""
+                    />
                   </div>
                   <div className="carInfo">
                     <p className="carTitle">{item.name}</p>

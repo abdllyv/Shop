@@ -86,7 +86,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 15px;
+            font-size: 12px;
           }
           &:hover {
             svg {
@@ -104,11 +104,6 @@
           align-items: center;
           gap: 10px;
           transition: 0.3s ease;
-
-          svg {
-            path {
-            }
-          }
           span {
             font-weight: 500;
             position: relative;

@@ -1,8 +1,12 @@
 // Icons
-import carImgage from "../assets/img/wolswagen.png";
+import { useContext } from "react";
 import { FaTrash } from "react-icons/fa";
+import { Context } from "../utils/CartContext";
 
 const ViewAllProduct = () => {
+  // Gloabl State
+  const { cart, incrementProduct, decrementProduct, removeProduct, total } =
+    useContext(Context);
   return (
     <section className="allCars">
       <div className="container">
@@ -14,30 +18,43 @@ const ViewAllProduct = () => {
                 <th>Car Image</th>
                 <th>Car Name</th>
                 <th>Car Details</th>
+                <th>Quantify</th>
                 <th>Car Price</th>
                 <th>Edit Car</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="carImg">
-                  <img src={carImgage} alt="" />
-                </td>
-                <td>Name</td>
-                <td>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-                  nihil aliquid nulla numquam id illo molestias consectetur
-                  adipisci sequi iste voluptatibus optio ratione totam debitis
-                  voluptatem, quisquam eveniet nam corrupti.
-                </td>
-                <td>$1900000</td>
-                <td className="edit">
-                   
-                    <FaTrash  />
+              {cart.map((item) => (
+                <tr key={item.id}>
+                  <td className="carImg">
+                    {item.productImage && (
+                      <img
+                        src={`http://localhost:5000/${item.productImage}`}
+                        alt={item.name}
+                      />
+                    )}
                   </td>
-              </tr>
+                  <td>{item.name}</td>
+                  <td>{item.details}</td>
+                  <td>
+                    <div className="btn">
+                      <button onClick={() => incrementProduct(item)}>+</button>
+                      <div className="quantify">{item.quantify}</div>
+
+                      <button onClick={() => decrementProduct(item)}> -</button>
+                    </div>
+                  </td>
+                  <td>${item.price}</td>
+                  <td className="edit">
+                    <FaTrash onClick={() => removeProduct(item.id)} />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+          <div className="total-sum">
+            Total: <span>{total}$</span>
+          </div>
         </div>
       </div>
     </section>
