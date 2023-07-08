@@ -21,7 +21,7 @@ const CarDetails = () => {
       try {
         setLoading(true);
         await axios
-          .get(`http://localhost:5000/api/products/${carId}`)
+          .get(`${process.env.REACT_APP_ALL_PRODUCT}/${carId}`)
           .then((res) => {
             if (res.status === 200) {
               setCar(res.data);
@@ -49,7 +49,7 @@ const CarDetails = () => {
             >
               {car.productImage && (
                 <img
-                  src={`http://localhost:5000/${car.productImage}`}
+                  src={`${process.env.REACT_APP_CAR_IMG}${car.productImage}`}
                   alt={car.name}
                 />
               )}

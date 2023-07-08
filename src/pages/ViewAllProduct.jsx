@@ -29,7 +29,7 @@ const ViewAllProduct = () => {
                   <td className="carImg">
                     {item.productImage && (
                       <img
-                        src={`http://localhost:5000/${item.productImage}`}
+                        src={`${process.env.REACT_APP_CAR_IMG}${item.productImage}`}
                         alt={item.name}
                       />
                     )}

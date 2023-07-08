@@ -14,7 +14,7 @@ const Shop = () => {
     const getData=async()=>{
   try {
     setLoading(true)
-     await axios.get("http://localhost:5000/api/products").then(res=>{
+     await axios.get(process.env.REACT_APP_ALL_PRODUCT).then(res=>{
       if(res.status===200){
         setCars(res.data)
         setLoading(false)
